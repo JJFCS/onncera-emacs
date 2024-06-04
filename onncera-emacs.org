@@ -1,8 +1,15 @@
+#+TITLE: ONNCERA'S GNU EMACS CONFIGURATION
+#+AUTHOR: Jordon James Francisco
+#+DATE: <2024-06-04 Tue>
+#+TOC: headlines 2
 
 
 
 
 
+#+begin_src emacs-lisp
+	;; -*- lexical-binding: t; -*-
+#+end_src
 
 
 
