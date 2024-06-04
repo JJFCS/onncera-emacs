@@ -1,7 +1,4 @@
-#+TITLE: ONNCERA'S GNU EMACS CONFIGURATION
-#+AUTHOR: Jordon James Francisco
-#+DATE: <2024-06-04 Tue>
-#+TOC: headlines 2
+ONNCERA's GNU EMACS CONFIGURATION
 
 
 
@@ -39,21 +36,20 @@
 
 
 
-* EMACS GENERAL SETTINGS - SANE DEFAULTS
+* EMACS GENERAL SETTINGS - SANE DEFAULTS ---> SOA
 	- backup-directory-alist (variable): maps filenames to directories. Setting (("." . "~/.emacs-backups")) means that all files (".") should have their backups placed in the ~/.emacs_backups directory
 	- :custom in use-package
 		- essentially a shorthand for calling setq for each variable but ensures that the customizations are applied after the package is loaded
 #+begin_src emacs-lisp
 
-	;; displays eldoc documentations in a childframe (TODO - might be causing issues with company popup boxes in LSP mode)
-;;	(use-package eldoc-box
-;;	:ensure t
-;;	:hook (eldoc-mode . eldoc-box-hover-mode)
-;;	:init (global-eldoc-mode 1) (setq eldoc-idle-delay 0.1)  ;; eldoc is a minor mode... provides documentation for functions, variables, & arguments in the minibuffer as you type
-;;	)
+	(use-package eldoc-box  ;; displays eldoc documentations in a childframe
+	:ensure t
+	:hook (eldoc-mode . eldoc-box-hover-mode)
+	:init (global-eldoc-mode 1) (setq eldoc-idle-delay 0.1)  ;; eldoc is a minor mode... provides documentation for functions, variables, & arguments in the minibuffer as you type
+	)
 
 
-	(add-hook 'window-setup-hook 'toggle-frame-maximized t)  ;; emacs eyes only!
+	(add-hook 'window-setup-hook 'toggle-frame-fullscreen t)  ;; emacs eyes only!
 	(setq inhibit-splash-screen t)  ;; disables emacs's welcome page
 
 
@@ -69,7 +65,7 @@
 	(setq mac-command-key-is-meta  t)
 	(setq mac-command-modifier 'meta)
 
-	(global-hl-line-mode 1)  ;; enable early -- customise below (change color of current line)
+	(global-hl-line-mode 1)
 
 	(setq backup-directory-alist `(("." . ,(expand-file-name "~/.emacs-backups" user-emacs-directory))))  ;; set the directory for backup files
 	(setq auto-save-default nil auto-save-list-file-prefix nil)  ;; disable auto-saving, ensuring that emacs does not create the auto-save directory
@@ -92,9 +88,7 @@
 	(setq read-extended-command-predicate #'command-completion-default-include-p)  ;; Hide commands in M-x which do not work in the current mode
 	(setq undo-limit 10000000)  ;; emacs remembers up to 10000000 undo actions for each BUFFER
 
-
 	(setq version-control t)    ;; use version numbers for backups
-
 
 	(defun onncera-post-loading ()
 		(blink-cursor-mode -1) (fringe-mode -1) (scroll-bar-mode -1) (global-hl-line-mode 1) (set-face-underline 'hl-line nil) (split-window-horizontally)
@@ -254,24 +248,11 @@
 
 
 
-* LANGUAGE SERVER PROTOCOL - LSP
+* LANGUAGE SERVER PROTOCOL - LSP - TODO
 	read-process-output-max (* 1024 1024)
 	- sets the maximum amount of data (in bytes) emacs can read from a process output at once to 1 MB
 	- enlarging value of read-process-output-max can improve performance when dealing with language servers or other processes that produce a large amount of output
 	- emacs may read process output in smaller chunks, which can be inefficient and lead to performance bottlenecks... hence, we perform the above
-
-
-	lsp-ui settings
-	- lsp-ui-doc-enable   -> shows documentation for the symbol at point in a popup window
-	- lsp-ui-doc-position -> specifies the position of the documentation popup
-
-	- lsp-ui-sideline-enable           -> shows inline information (like diagnostics and code actions) beside the code
-	- lsp-ui-sideline-show-diagnostics -> diagnostics messages (e.g., errors, warnings) are shown in the sideline beside the relevant lines of code
-	- lsp-ui-sideline-show-code-action -> available code actions (like quick fixes) are shown in the sideline. actions can be applied directly from the sideline
-	- lsp-ui-sideline-update-mode      -> determines when sideline information is updated. `line' updates the information when cursor moves to a different line
-
-	- lsp-ui-peek-enable      -> provides an interactive interface for finding references and definitions. shows results in a popup window
-	- lsp-ui-peek-always-show -> results are always displayed, even if there is only one result
 #+begin_src emacs-lisp
 
 ;; IDE capabilities to various programming languages
@@ -410,7 +391,7 @@
 	:config
 	(setq doom-themes-enable-bold   t)    ;; if nil, bold    is universally disabled
 	(setq doom-themes-enable-italic t)    ;; if nil, italics is universally disabled
-	(load-theme 'doom-homage-white  t)
+;;	(load-theme 'doom-homage-white  t)
 	(doom-themes-org-config)              ;; Corrects (and improves) org-mode's native fontification.
 )
 

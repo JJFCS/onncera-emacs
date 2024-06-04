@@ -17,15 +17,14 @@
 (unless (package-installed-p 'use-package) (package-refresh-contents) (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 
-;; displays eldoc documentations in a childframe (TODO - might be causing issues with company popup boxes in LSP mode)
-;;	(use-package eldoc-box
-;;	:ensure t
-;;	:hook (eldoc-mode . eldoc-box-hover-mode)
-;;	:init (global-eldoc-mode 1) (setq eldoc-idle-delay 0.1)  ;; eldoc is a minor mode... provides documentation for functions, variables, & arguments in the minibuffer as you type
-;;	)
+(use-package eldoc-box  ;; displays eldoc documentations in a childframe
+	:ensure t
+	:hook (eldoc-mode . eldoc-box-hover-mode)
+	:init (global-eldoc-mode 1) (setq eldoc-idle-delay 0.1)  ;; eldoc is a minor mode... provides documentation for functions, variables, & arguments in the minibuffer as you type
+	)
 
 
-	(add-hook 'window-setup-hook 'toggle-frame-maximized t)  ;; emacs eyes only!
+	(add-hook 'window-setup-hook 'toggle-frame-fullscreen t)  ;; emacs eyes only!
 	(setq inhibit-splash-screen t)  ;; disables emacs's welcome page
 
 
@@ -41,7 +40,7 @@
 	(setq mac-command-key-is-meta  t)
 	(setq mac-command-modifier 'meta)
 
-	(global-hl-line-mode 1)  ;; enable early -- customise below (change color of current line)
+	(global-hl-line-mode 1)
 
 	(setq backup-directory-alist `(("." . ,(expand-file-name "~/.emacs-backups" user-emacs-directory))))  ;; set the directory for backup files
 	(setq auto-save-default nil auto-save-list-file-prefix nil)  ;; disable auto-saving, ensuring that emacs does not create the auto-save directory
@@ -64,9 +63,7 @@
 	(setq read-extended-command-predicate #'command-completion-default-include-p)  ;; Hide commands in M-x which do not work in the current mode
 	(setq undo-limit 10000000)  ;; emacs remembers up to 10000000 undo actions for each BUFFER
 
-
 	(setq version-control t)    ;; use version numbers for backups
-
 
 	(defun onncera-post-loading ()
 		(blink-cursor-mode -1) (fringe-mode -1) (scroll-bar-mode -1) (global-hl-line-mode 1) (set-face-underline 'hl-line nil) (split-window-horizontally)
@@ -271,7 +268,7 @@
 	:config
 	(setq doom-themes-enable-bold   t)    ;; if nil, bold    is universally disabled
 	(setq doom-themes-enable-italic t)    ;; if nil, italics is universally disabled
-	(load-theme 'doom-homage-white  t)
+;;	(load-theme 'doom-homage-white  t)
 	(doom-themes-org-config)              ;; Corrects (and improves) org-mode's native fontification.
 )
 
