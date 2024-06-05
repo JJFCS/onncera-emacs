@@ -18,62 +18,62 @@
 (eval-when-compile (require 'use-package))
 
 (use-package eldoc-box  ;; displays eldoc documentations in a childframe
-	:ensure t
-	:hook (eldoc-mode . eldoc-box-hover-mode)
-	:init (global-eldoc-mode 1) (setq eldoc-idle-delay 0.1)  ;; eldoc is a minor mode... provides documentation for functions, variables, & arguments in the minibuffer as you type
-	)
+:ensure t
+:hook (eldoc-mode . eldoc-box-hover-mode)
+:init (global-eldoc-mode 1) (setq eldoc-idle-delay 0.1)  ;; eldoc is a minor mode... provides documentation for functions, variables, & arguments in the minibuffer as you type
+)
 
 
-	(add-hook 'window-setup-hook 'toggle-frame-fullscreen t)  ;; emacs eyes only!
-	(setq inhibit-splash-screen t)  ;; disables emacs's welcome page
+(add-hook 'window-setup-hook 'toggle-frame-fullscreen t)  ;; emacs eyes only!
+(setq inhibit-splash-screen t)  ;; disables emacs's welcome page
 
 
-	(setq tab-always-indent         'complete)  ;; support indentation + completion using TAB key. `completion-at-point' normally bound to M-TAB
-	(setq display-line-numbers-type 'relative)  ;; enabling relative line numbers
-	(global-display-line-numbers-mode 1)        ;; enabling line numbers
-	(electric-pair-mode               1)        ;; enabling automatic parens pairing
+(setq tab-always-indent         'complete)  ;; support indentation + completion using TAB key. `completion-at-point' normally bound to M-TAB
+(setq display-line-numbers-type 'relative)  ;; enabling relative line numbers
+(global-display-line-numbers-mode 1)        ;; enabling line numbers
+(electric-pair-mode               1)        ;; enabling automatic parens pairing
 
-	(menu-bar-mode -1)                          ;; disable menu bar
-	(tool-bar-mode -1)                          ;; disable tool bar
+(menu-bar-mode -1)                          ;; disable menu bar
+(tool-bar-mode -1)                          ;; disable tool bar
 
-	(setq-default truncate-lines   t)           ;; enabling truncated lines
-	(setq mac-command-key-is-meta  t)
-	(setq mac-command-modifier 'meta)
+(setq-default truncate-lines   t)           ;; enabling truncated lines
+(setq mac-command-key-is-meta  t)
+(setq mac-command-modifier 'meta)
 
-	(global-hl-line-mode 1)
+(global-hl-line-mode 1)
 
-	(setq backup-directory-alist `(("." . ,(expand-file-name "~/.emacs-backups" user-emacs-directory))))  ;; set the directory for backup files
-	(setq auto-save-default nil auto-save-list-file-prefix nil)  ;; disable auto-saving, ensuring that emacs does not create the auto-save directory
-	(setq backup-by-copying   t)  ;; create backups by copying files, which avoids issues with hard links
+(setq backup-directory-alist `(("." . ,(expand-file-name "~/.emacs-backups" user-emacs-directory))))  ;; set the directory for backup files
+(setq auto-save-default nil auto-save-list-file-prefix nil)  ;; disable auto-saving, ensuring that emacs does not create the auto-save directory
+(setq backup-by-copying   t)  ;; create backups by copying files, which avoids issues with hard links
 
-	;; create the backup directory if it does not exist
-	(unless (file-exists-p  "~/.emacs-backups"  )
-		(make-directory "~/.emacs-backups" t)
-	)
+;; create the backup directory if it does not exist
+(unless (file-exists-p  "~/.emacs-backups"  )
+	(make-directory "~/.emacs-backups" t)
+)
 
-	(setq kept-new-versions   5)   ;; number of newest versions to keep
-	(setq kept-old-versions   5)   ;; number of oldest versions to keep
-	(setq delete-old-versions t)   ;; delete excess backup versions
+(setq kept-new-versions   5)   ;; number of newest versions to keep
+(setq kept-old-versions   5)   ;; number of oldest versions to keep
+(setq delete-old-versions t)   ;; delete excess backup versions
 
 
-	(setq enable-recursive-minibuffers t)  ;; support opening new minibuffers from inside existing minibuffers
-	(setq delete-by-moving-to-trash    t)  ;; extra layer of precaution against deleting wanted files
-	(setq org-src-preserve-indentation t)  ;; disable automatic indentation in source code blocks
-		
-	(setq read-extended-command-predicate #'command-completion-default-include-p)  ;; Hide commands in M-x which do not work in the current mode
-	(setq undo-limit 10000000)  ;; emacs remembers up to 10000000 undo actions for each BUFFER
+(setq enable-recursive-minibuffers t)  ;; support opening new minibuffers from inside existing minibuffers
+(setq delete-by-moving-to-trash    t)  ;; extra layer of precaution against deleting wanted files
+(setq org-src-preserve-indentation t)  ;; disable automatic indentation in source code blocks
 
-	(setq version-control t)    ;; use version numbers for backups
+(setq read-extended-command-predicate #'command-completion-default-include-p)  ;; Hide commands in M-x which do not work in the current mode
+(setq undo-limit 10000000)  ;; emacs remembers up to 10000000 undo actions for each BUFFER
 
-	(defun onncera-post-loading ()
-		(blink-cursor-mode -1) (fringe-mode -1) (scroll-bar-mode -1) (global-hl-line-mode 1) (set-face-underline 'hl-line nil) (split-window-horizontally)
-		(set-background-color "#161616") (set-foreground-color "burlywood3") (set-cursor-color "#40FF40") (set-face-background hl-line-face "midnight blue")
-	)
-	(add-hook 'window-setup-hook 'onncera-post-loading t)
-;;	(add-hook 'after-init-hook (lambda ()
-;;					(load-theme 'gruber-darker t)
-;;				   )
-;;	)
+(setq version-control t)    ;; use version numbers for backups
+
+(defun onncera-post-loading ()
+	(blink-cursor-mode -1) (fringe-mode -1) (scroll-bar-mode -1) (global-hl-line-mode 1) (set-face-underline 'hl-line nil) (split-window-horizontally)
+	(set-background-color "#161616") (set-foreground-color "burlywood3") (set-cursor-color "#40FF40") (set-face-background hl-line-face "midnight blue")
+)
+(add-hook 'window-setup-hook 'onncera-post-loading t)
+(add-hook 'after-init-hook (lambda ()
+				(load-theme 'modus-vivendi-tritanopia t)
+			   )
+)
 
 ;; completion style that divides the pattern into space-separated
 ;; components, &  matches candidates that match all of the components in any order (provides better filtering methods)
@@ -94,7 +94,8 @@
 	:ensure t
 	:bind
 		(
-		("C-."       . embark-act)       ;; essentially acts as a keyboard-based version of a right-click contextual menu
+		("C-." . embark-act )  ;; essentially acts as a keyboard-based version of a right-click contextual menu
+		("C-;" . embark-dwim)  ;; alternative == `M-.'
 		)
 	:init (setq prefix-help-command #'embark-prefix-help-command)  ;; change the key help with a completing-read interface... now, when you start on a prefix sequence such as `C-x', pressing `C-h' will up the
 	                                                               ;; embark version of the built-in `prefix-help-command', which will list the keys under that prefix & their bindings, and lets you select the
@@ -206,12 +207,7 @@
 )
 
 ;; enhances LSP experience by offering a user-friendly interface with features like real-time error checking, code actions, and code lenses
-(use-package lsp-ui :ensure t :hook (lsp-mode . lsp-ui-mode)
-;;	:custom
-;;	(lsp-ui-doc-enable t) (lsp-ui-doc-position 'at-point)
-;;	(lsp-ui-sideline-enable t) (lsp-ui-sideline-show-diagnostics t) (lsp-ui-sideline-show-hover t) (lsp-ui-sideline-show-code-actions t) (lsp-ui-sideline-update-mode 'line)
-;;	(lsp-ui-peek-enable t) (lsp-ui-peek-always-show t) (lsp-ui-peek-show-directory t)
-)
+(use-package lsp-ui :ensure t :hook (lsp-mode . lsp-ui-mode))
 
 (setq treesit-extra-load-path '("~/.emacs.d/onncera-language-grammars"))  ;; additional directories to look for tree-sitter language definitions
 (setq treesit-language-source-alist
@@ -259,6 +255,16 @@
 ;; a modern & fast just-in-time spell checker
 (use-package jinx :ensure t :hook (emacs-startup . global-jinx-mode))
 
+(use-package undo-tree
+	:ensure t
+	:config
+	(global-undo-tree-mode 1)
+	(setq undo-tree-history-directory-alist '(
+							("." . "~/.cache/emacs-undo")
+						 )
+	)
+)
+
 ;; an interface to the version control system git... aspires to be a complete git porcelain
 (use-package magit :ensure t :defer t)
 
@@ -272,11 +278,11 @@
 	(doom-themes-org-config)              ;; Corrects (and improves) org-mode's native fontification.
 )
 
+
 (use-package gruber-darker-theme :ensure t)
 (use-package leuven-theme        :ensure t)
 (use-package modus-themes        :ensure t)
 (use-package moe-theme           :ensure t)
-(use-package monokai-theme       :ensure t)
 
 (set-face-italic 'font-lock-comment-face nil)
 (set-face-bold-p 'bold                   nil)

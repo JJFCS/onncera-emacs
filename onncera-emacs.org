@@ -95,10 +95,10 @@ ONNCERA's GNU EMACS CONFIGURATION
 		(set-background-color "#161616") (set-foreground-color "burlywood3") (set-cursor-color "#40FF40") (set-face-background hl-line-face "midnight blue")
 	)
 	(add-hook 'window-setup-hook 'onncera-post-loading t)
-;;	(add-hook 'after-init-hook (lambda ()
-;;					(load-theme 'gruber-darker t)
-;;				   )
-;;	)
+	(add-hook 'after-init-hook (lambda ()
+					(load-theme 'modus-vivendi-tritanopia t)
+				   )
+	)
 
 #+end_src
 
@@ -130,7 +130,8 @@ ONNCERA's GNU EMACS CONFIGURATION
 	:ensure t
 	:bind
 		(
-		("C-."       . embark-act)       ;; essentially acts as a keyboard-based version of a right-click contextual menu
+		("C-." . embark-act )  ;; essentially acts as a keyboard-based version of a right-click contextual menu
+		("C-;" . embark-dwim)  ;; alternative == `M-.'
 		)
 	:init (setq prefix-help-command #'embark-prefix-help-command)  ;; change the key help with a completing-read interface... now, when you start on a prefix sequence such as `C-x', pressing `C-h' will up the
 	                                                               ;; embark version of the built-in `prefix-help-command', which will list the keys under that prefix & their bindings, and lets you select the
@@ -248,7 +249,7 @@ ONNCERA's GNU EMACS CONFIGURATION
 
 
 
-* LANGUAGE SERVER PROTOCOL - LSP - TODO
+* LANGUAGE SERVER PROTOCOL (LSP) ---> SOA
 	read-process-output-max (* 1024 1024)
 	- sets the maximum amount of data (in bytes) emacs can read from a process output at once to 1 MB
 	- enlarging value of read-process-output-max can improve performance when dealing with language servers or other processes that produce a large amount of output
@@ -264,12 +265,7 @@ ONNCERA's GNU EMACS CONFIGURATION
 )
 
 ;; enhances LSP experience by offering a user-friendly interface with features like real-time error checking, code actions, and code lenses
-(use-package lsp-ui :ensure t :hook (lsp-mode . lsp-ui-mode)
-;;	:custom
-;;	(lsp-ui-doc-enable t) (lsp-ui-doc-position 'at-point)
-;;	(lsp-ui-sideline-enable t) (lsp-ui-sideline-show-diagnostics t) (lsp-ui-sideline-show-hover t) (lsp-ui-sideline-show-code-actions t) (lsp-ui-sideline-update-mode 'line)
-;;	(lsp-ui-peek-enable t) (lsp-ui-peek-always-show t) (lsp-ui-peek-show-directory t)
-)
+(use-package lsp-ui :ensure t :hook (lsp-mode . lsp-ui-mode))
 
 #+end_src
 
@@ -372,6 +368,23 @@ ONNCERA's GNU EMACS CONFIGURATION
 
 
 
+* UNDO-TREE ---> SOA
+#+begin_src emacs-lisp
+	(use-package undo-tree
+		:ensure t
+		:config
+		(global-undo-tree-mode 1)
+		(setq undo-tree-history-directory-alist '(
+								("." . "~/.cache/emacs-undo")
+							 )
+		)
+	)
+#+end_src
+
+
+
+
+
 * MAGIT ---> SOA
 #+begin_src emacs-lisp
 	;; an interface to the version control system git... aspires to be a complete git porcelain
@@ -395,11 +408,11 @@ ONNCERA's GNU EMACS CONFIGURATION
 	(doom-themes-org-config)              ;; Corrects (and improves) org-mode's native fontification.
 )
 
+
 (use-package gruber-darker-theme :ensure t)
 (use-package leuven-theme        :ensure t)
 (use-package modus-themes        :ensure t)
 (use-package moe-theme           :ensure t)
-(use-package monokai-theme       :ensure t)
 
 #+end_src
 
